@@ -1,0 +1,2122 @@
+<!doctype html>
+<html data-theme="dark">
+<head>
+	<!-- pour éviter les problèmes d'accents-->
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<!-- jQuery library <script src="js/jquery-1.12.0.min.js"> -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="hm.css" />
+	<link rel="icon" href="favicon.png" />
+	<title>Heros & Monsters Calculator</title>
+</head>
+
+<body id="home">
+
+	<div class="wrapper">
+		<div class="title-wrapper">
+			<h1 class="title main-title">
+				Heros and Monsters Calculator v0.870
+			</h1>
+			<div class="item-centered data-items-tab">
+				<div>Theme</div>
+				<div class="select_box">
+					<select class="button_select select-theme" onchange="updateTheme()">
+						<option selected value="light">Light</option>
+						<option value="dark">Dark</option>
+						<option value="m_green">Medium Green</option>
+						<option value="d_blue">Deep Blue</option>
+						<option value="burnt_sienna">Desert</option>
+						<option value="chandler">Chandler</option>
+						<option value="legacy">Legacy</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="tabs_wrap item-border">
+			<ul>
+				<li data-tabs="tab_data" class="active">Data Input</li>
+				<li data-tabs="tab_pet">Pet Evolution Cost Calculator</li>
+				<li data-tabs="tab_craft">Sky Forge & Resources Calculator</li>
+				<li data-tabs="tab_mordek">Boss Fight Simulator</li>
+				<li data-tabs="tab_drop">Drop Rates</li>
+				<li data-tabs="tab_rebuild">Rebuild</li>
+				<li data-tabs="tab_settings">Settings</li>
+			</ul>
+		</div>
+		<div class="container">
+			<div class="tab_item_wrap item-border tab_data active">
+				<div class="main-data">
+					<div class="main-title">Enter your data</div>
+					<div class="ascension-info">
+						<div class="ascension-text">
+							<div class="info-text"><div>Levels per second :</div><div class="level-per-second"></div></div>
+							<div class="info-text"><div>Max Idle Level :</div><div class="max-idle-level"></div></div>
+							<div class="info-text"><div>Max Idle Time :</div><div class="max-idle-time-level"></div></div>
+							<div class="info-text"><div>Loyalist Ascension Multiplier :</div><div class="loyalist-asc-mult"></div></div>
+						</div>
+						<div class="ascension-text">
+							<div class="info-text"><div>Current Ascension Bonus Increase:</div><div class="current-ascension-bonus"></div></div>
+							<div class="info-text"><div>Next Ascension Bonus :</div><div class="next-ascension-bonus"></div></div>
+							<div class="info-text"><div>Next Hour Asc. Bonus Gain:</div><div class="next-hour-ascension-bonus"></div></div>
+							<div class="info-text"><div>Max Ascension Bonus :</div><div class="max-ascension-bonus"></div></div>
+						</div>
+						<div class="ascension-text quick-ascend">
+							<div>Quick Ascension - Low bonus (@lv 2M)</div>
+							<div class="info-text"><div>Time before next ascension :</div><div class="time-before-ascension"></div></div>
+							<div class="info-text"><div>Date and time<br>of next ascension :</div><div class="date-next-ascension"></div></div>
+						</div>
+						<div class="ascension-text slow-ascend">
+							<div>Slow Ascension - High bonus (@lv 7M)</div>
+							<div class="info-text"><div>Time before next ascension :</div><div class="time-before-ascension-high"></div></div>
+							<div class="info-text"><div>Date and time<br>of next ascension :</div><div class="date-next-ascension-high"></div></div>
+						</div>
+						<div class="ascension-text">
+							<div class="info-text"><div>Difficulty :</div></div>
+							<div class="info-text"><input id="difficulty" type="range" style="width:100%" min="0" max="4" value="0" onchange="changeDifficulty(this)"><div class="difficulty-value">1x</div></div>
+							<div class="info-text"><div>Reward :</div><div class="difficulty-reward">1x</div></div>
+						</div>
+					</div>
+				</div>
+				<div class="main-data">
+					<div class="info-text secondary-title"><div>Fire Blade level needed to one-shot monsters until being one-shot by them (considering the use of Stone Skin with Mira equipped) :</div><div class="max-idle-skill-upgrade">4000</div></div>
+				</div>
+			</div>
+			<div class="tab_item_wrap item-border tab_data active data">
+				<div class="data-title title-alone item-border title-resources">
+					<div class="bold-title">Resources</div>
+				</div>
+				<div class="data-category data-category-title item-border">
+					<div class="data-items">
+						<div class="data-item item-border item-gold">
+							<label for="resources-gold">Gold</label>
+							<input id="resources-gold" class="input-int controlled-input auto-width timed-hide" type="text">
+							<div id="resources-gold-text" class="formated-number wrap-text show-hidden-input item-border"></div>
+						</div>
+						<div class="data-item item-border item-wood">
+							<label for="resources-wood">Wood</label>
+							<input id="resources-wood" class="input-int controlled-input auto-width timed-hide" type="text">
+							<div id="resources-wood-text" class="formated-number wrap-text show-hidden-input item-border"></div>
+						</div>
+						<div class="data-item item-border item-stone">
+							<label for="resources-stone">Stone</label>
+							<input id="resources-stone" class="input-int controlled-input auto-width timed-hide" type="text">
+							<div id="resources-stone-text" class="formated-number wrap-text show-hidden-input item-border"></div>
+						</div>
+						<div class="data-item item-border item-metal">
+							<label for="resources-metal">Metal</label>
+							<input id="resources-metal" class="input-int controlled-input auto-width timed-hide" type="text">
+							<div id="resources-metal-text" class="formated-number wrap-text show-hidden-input item-border"></div>
+						</div>
+						<div class="data-item item-border item-gem">
+							<label for="resources-gem">Gem</label>
+							<input id="resources-gem" class="input-int controlled-input auto-width timed-hide" type="text">
+							<div id="resources-gem-text" class="formated-number wrap-text show-hidden-input item-border"></div>
+						</div>
+					</div>
+				</div>
+				<div class="data-title title-alone item-border title-bonus">
+					<div class="bold-title">Bonus</div>
+				</div>
+				<div class="data-category data-category-title item-border">
+					<div class="data-items">
+						<div class="data-item item-border item-ascension">
+							<label for="bonus-ascension">Ascension Multiplier</label>
+							<input id="bonus-ascension" class="input-real controlled-input auto-width timed-hide" type="text">
+							<div id="bonus-ascension-text" class="formated-number wrap-text show-hidden-input item-border"></div>
+						</div>
+						<div class="data-item item-border item-craft">
+							<label for="bonus-craft">Minimum Craft</label>
+							<div class="input-with-control">
+								<button class="value-control" onclick="valueUpdate('bonus-craft',false)">−</button>
+								<div class="input-percent-right"><input id="bonus-craft" class="input-percent controlled-input" type="number"></div>
+								<button class="value-control" onclick="valueUpdate('bonus-craft',true)">+</button>
+							</div>
+						</div>
+						<div class="data-item item-border item-speed">
+							<label for="bonus-speed">Speed Multiplier</label>
+							<input id="bonus-speed" class="input-real controlled-input auto-width timed-hide" type="text">
+							<div id="bonus-speed-text" class="formated-number wrap-text show-hidden-input item-border"></div>
+						</div>
+					</div>
+				</div>
+				<div class="data-title title-alone item-border title-stats">
+					<div class="bold-title">Player Stats</div>
+				</div>
+				<div class="data-category data-category-title item-border">
+					<div class="data-items">
+						<div class="data-item item-border item-attack">
+							<label for="stat-attack">Attack</label>
+							<input id="stat-attack" class="input-int controlled-input auto-width timed-hide" type="text">
+							<div id="stat-attack-text" class="formated-number wrap-text show-hidden-input item-border"></div>
+						</div>
+						<div class="data-item item-border item-critical">
+							<label for="stat-critical">Crit Chance</label>
+							<div class="input-percent-right"><input id="stat-critical" class="input-real-crit controlled-input auto-width" type="text"></div>
+						</div>						
+						<div class="data-item item-border item-gold">
+							<label for="stat-gold">Gold</label>
+							<input id="stat-gold" class="input-int controlled-input auto-width timed-hide" type="text">
+							<div id="stat-gold-text" class="formated-number wrap-text show-hidden-input item-border"></div>
+						</div>
+						<div class="data-item item-border item-regen">
+							<label for="stat-regen">Regen</label>
+							<input id="stat-regen" class="input-int controlled-input auto-width timed-hide" type="text">
+							<div id="stat-regen-text" class="formated-number wrap-text show-hidden-input item-border"></div>
+						</div>
+						<div class="data-item item-border item-health">
+							<label for="stat-health">Health</label>
+							<input id="stat-health" class="input-int controlled-input auto-width timed-hide" type="text">
+							<div id="stat-health-text" class="formated-number wrap-text show-hidden-input item-border"></div>
+						</div>
+					</div>
+				</div>
+				<div class="data-title title-alone item-border title-stats">
+					<div class="bold-title">Progress</div>
+				</div>
+				<div class="data-category data-category-title item-border">
+					<div class="data-items">
+						<div class="data-item item-border item-level">
+							<label for="stat-level">Current Level</label>
+							<input id="stat-level" class="input-int controlled-input auto-width timed-hide" type="text">
+							<div id="stat-level-text" class="formated-number wrap-text show-hidden-input item-border"></div>
+						</div>
+						<div class="data-item item-border item-level">
+							<label for="stat-level-highest">Highest Level</label>
+							<input id="stat-level-highest" class="input-int controlled-input auto-width timed-hide" type="text">
+							<div id="stat-level-highest-text" class="formated-number wrap-text show-hidden-input item-border"></div>
+						</div>
+						<div class="data-item item-border item-level">
+							<label for="stat-bonus-ascension-target">Ascension Bonus gain Target</label>
+							<input id="stat-bonus-ascension-target" class="input-real controlled-input auto-width timed-hide" type="text">
+							<div id="stat-bonus-ascension-target-text" class="formated-number wrap-text show-hidden-input item-border"></div>
+						</div>
+						<div class="data-item item-border item-level">
+							<div class="info-text"><div>Highest level needed :</div><div class="bonus-ascension-target-level-needed wrap-text"></div></div>
+							<div class="info-text"><div>Levels missing :</div><div class="bonus-ascension-target-level-missing wrap-text"></div></div>
+							<div class="info-text"><div>Time to reach :</div><div class="bonus-ascension-target-time-needed wrap-text"></div></div>
+						</div>
+					</div>
+				</div>
+				<div class="data-title title-alone item-border title-sanctum">
+					<div class="bold-title">Inner Sanctum</div>
+				</div>
+				<div class="data-category data-category-title item-border">
+					<div class="data-items">
+						<div class="data-item item-border item-sanctum-defense">
+							<label for="sanctum-defense">Stone Skin</label>
+							<input id="sanctum-defense" class="input-int controlled-input auto-width" type="text">
+							<label for="sanctum-defense-duration">Stone Skin Duration</label>
+							<input id="sanctum-defense-duration" class="input-int controlled-input auto-width" type="text">
+							<label class="evolve-hero" for="mira-evolve">Mira Buff value</label>
+							<div class="input-with-control">
+								<button class="value-control" onclick="valueUpdate('mira-evolve',false)">−</button>
+								<div><input id="mira-evolve" class="input-int-hero-evolve controlled-input" type="number"></div>
+								<button class="value-control" onclick="valueUpdate('mira-evolve',true)">+</button>
+							</div>
+							<div class="inline-checkbox">
+								<input type="checkbox" class="hero-check" id="mira-equiped" name="mira-equiped" />
+								<label for="mira-equiped">Equipped</label>
+							</div>
+							<div class="evolve-hero">Skill effect</div>
+							<div class="sanctum-defense-effect wrap-text"></div>
+						</div>
+						<div class="data-item item-border item-sanctum-attack">
+							<label for="sanctum-attack">Fire Blade</label>
+							<input id="sanctum-attack" class="input-int controlled-input auto-width" type="text">
+							<label for="sanctum-attack-duration">Fire Blade Duration</label>
+							<input id="sanctum-attack-duration" class="input-int controlled-input auto-width" type="text">
+							<label class="evolve-hero" for="rex-evolve">Rex Buff value</label>
+							<div class="input-with-control">
+								<button class="value-control" onclick="valueUpdate('rex-evolve',false)">−</button>
+								<div><input id="rex-evolve" class="input-int-hero-evolve controlled-input" type="number"></div>
+								<button class="value-control" onclick="valueUpdate('rex-evolve',true)">+</button>
+							</div>
+							<div class="inline-checkbox">
+								<input type="checkbox" class="hero-check" id="rex-equiped" name="rex-equiped" />
+								<label for="rex-equiped">Equipped</label>
+							</div>
+							<div class="evolve-hero">Skill effect</div>
+							<div class="sanctum-attack-effect wrap-text"></div>
+						</div>
+						<div class="data-item item-border item-sanctum-health">
+							<label for="sanctum-health">Soul Collector</label>
+							<input id="sanctum-health" class="input-int controlled-input auto-width" type="text">
+							<div>Soul Collector Duration</div>
+							<div class="item-border">30</div>
+							<label class="evolve-hero" for="leo-evolve">Leo Buff value</label>
+							<div class="input-with-control">
+								<button class="value-control" onclick="valueUpdate('leo-evolve',false)">−</button>
+								<div><input id="leo-evolve" class="input-int-hero-evolve controlled-input" type="number"></div>
+								<button class="value-control" onclick="valueUpdate('leo-evolve',true)">+</button>
+							</div>
+							<div class="inline-checkbox">
+								<input type="checkbox" class="hero-check" id="leo-equiped" name="leo-equiped" />
+								<label for="leo-equiped">Equipped</label>
+							</div>
+							<div class="evolve-hero">Skill effect</div>
+							<div class="sanctum-health-effect wrap-text"></div>
+						</div>
+						<div class="data-item item-border item-sanctum-gold">
+							<label for="sanctum-gold">Touch of Midas</label>
+							<input id="sanctum-gold" class="input-int controlled-input auto-width" type="text">
+							<label for="sanctum-gold-duration">Touch of Midas Duration</label>
+							<input id="sanctum-gold-duration" class="input-int controlled-input auto-width" type="text">
+							<label class="evolve-hero" for="sylvie-evolve">Sylvie Buff value</label>
+							<div class="input-with-control">
+								<button class="value-control" onclick="valueUpdate('sylvie-evolve',false)">−</button>
+								<div><input id="sylvie-evolve" class="input-int-hero-evolve controlled-input" type="number"></div>
+								<button class="value-control" onclick="valueUpdate('sylvie-evolve',true)">+</button>
+							</div>
+							<div class="inline-checkbox">
+								<input type="checkbox" class="hero-check" id="sylvie-equiped" name="sylvie-equiped" />
+								<label for="sylvie-equiped">Equipped</label>
+							</div>
+							<div class="evolve-hero">Skill effect</div>
+							<div class="sanctum-gold-effect wrap-text"></div>
+						</div>
+						<div class="data-item item-border item-sanctum-speed">
+							<label for="sanctum-speed">Gods Speed</label>
+							<input id="sanctum-speed" class="input-int controlled-input auto-width" type="text">
+							<label for="sanctum-speed-duration">Gods Speed Duration</label>
+							<input id="sanctum-speed-duration" class="input-int controlled-input auto-width" type="text">
+							<label class="evolve-hero" for="anantha-evolve">Anantha Buff value</label>
+							<div class="input-with-control">
+								<button class="value-control" onclick="valueUpdate('anantha-evolve',false)">−</button>
+								<div><input id="anantha-evolve" class="input-int-hero-evolve controlled-input" type="number"></div>
+								<button class="value-control" onclick="valueUpdate('anantha-evolve',true)">+</button>
+							</div>
+							<div class="inline-checkbox">
+								<input type="checkbox" class="hero-check" id="anantha-equiped" name="anantha-equiped" />
+								<label for="anantha-equiped">Equipped</label>
+							</div>
+							<div class="evolve-hero">Skill effect</div>
+							<div class="sanctum-speed-effect wrap-text"></div>
+						</div>
+					</div>
+				</div>
+				<div class="data-title title-alone item-border">
+					<div class="bold-title">Pets</div>
+					<div>Note : Pet effect can be triggered each time you defeat an ennemy.</div>
+				</div>
+				<div class="data-category data-category-title item-border">
+					<div class="data-items data-items-flex">
+						<div class="data-item item-border pet-bird item-pet">
+							<label for="bird-level">Bird level</label>
+							<div class="input-with-control">
+								<button class="value-control" onclick="valueUpdate('bird-level',false)">−</button>
+								<div><input id="bird-level" class="input-int-pet controlled-input auto-width" type="number"></div>
+								<button class="value-control" onclick="valueUpdate('bird-level',true)">+</button>
+							</div>
+							<div class="inline-checkbox">
+								<input type="checkbox" class="pet-check" id="bird-equiped" name="bird-equiped" />
+								<label for="bird-equiped">Equipped</label>
+							</div>
+							<label class="evolve-pet" for="bird-evolve">Evolve level</label>
+							<input id="bird-evolve" class="input-int-pet-evolve controlled-input auto-width timed-hide" type="number" min="1">
+							<div id="bird-evolve-text" class="formated-number wrap-text show-hidden-input item-border"></div>
+							<div class="evolve-pet">Pet effect</div>
+							<div class="bird-effect wrap-text"></div>
+						</div>
+						<div class="data-item item-border pet-dog item-pet">
+							<label for="dog-level">Dog level</label>
+							<div class="input-with-control">
+								<button class="value-control" onclick="valueUpdate('dog-level',false)">−</button>
+								<div><input id="dog-level" class="input-int-pet controlled-input auto-width" type="number"></div>
+								<button class="value-control" onclick="valueUpdate('dog-level',true)">+</button>
+							</div>
+							<div class="inline-checkbox">
+								<input type="checkbox" class="pet-check" id="dog-equiped" name="dog-equiped" />
+								<label for="dog-equiped">Equipped</label>
+							</div>
+							<label class="evolve-pet" for="dog-evolve">Evolve level</label>
+							<input id="dog-evolve" class="input-int-pet-evolve controlled-input auto-width timed-hide" type="number" min="1">
+							<div id="dog-evolve-text" class="formated-number wrap-text show-hidden-input item-border"></div>
+							<div class="evolve-pet">Pet effect</div>
+							<div class="dog-effect wrap-text"></div>
+						</div>
+						<div class="data-item item-border pet-fox item-pet">
+							<label for="fox-level">Fox level</label>
+							<div class="input-with-control">
+								<button class="value-control" onclick="valueUpdate('fox-level',false)">−</button>
+								<div><input id="fox-level" class="input-int-pet controlled-input auto-width" type="number"></div>
+								<button class="value-control" onclick="valueUpdate('fox-level',true)">+</button>
+							</div>
+							<div class="inline-checkbox">
+								<input type="checkbox" class="pet-check" id="fox-equiped" name="fox-equiped" />
+								<label for="fox-equiped">Equipped</label>
+							</div>
+							<label class="evolve-pet" for="fox-evolve">Evolve level</label>
+							<input id="fox-evolve" class="input-int-pet-evolve controlled-input auto-width timed-hide" type="number" min="1">
+							<div id="fox-evolve-text" class="formated-number wrap-text show-hidden-input item-border"></div>
+							<div class="evolve-pet">Pet effect</div>
+							<div class="fox-effect wrap-text"></div>
+						</div>
+						<div class="data-item item-border pet-pinguin item-pet">
+							<label for="pinguin-level">Penguin level</label>
+							<div class="input-with-control">
+								<button class="value-control" onclick="valueUpdate('pinguin-level',false)">−</button>
+								<div><input id="pinguin-level" class="input-int-pet controlled-input auto-width" type="number"></div>
+								<button class="value-control" onclick="valueUpdate('pinguin-level',true)">+</button>
+							</div>
+							<div class="inline-checkbox">
+								<input type="checkbox" class="pet-check" id="pinguin-equiped" name="pinguin-equiped" />
+								<label for="pinguin-equiped">Equipped</label>
+							</div>
+							<label class="evolve-pet" for="pinguin-evolve">Evolve level</label>
+							<input id="pinguin-evolve" class="input-int-pet-evolve controlled-input auto-width timed-hide" type="number" min="1">
+							<div id="pinguin-evolve-text" class="formated-number wrap-text show-hidden-input item-border"></div>
+							<div class="evolve-pet">Pet effect</div>
+							<div class="pinguin-effect wrap-text"></div>
+						</div>
+						<div class="data-item item-border pet-snake item-pet">
+							<label for="snake-level">Snake level</label>
+							<div class="input-with-control">
+								<button class="value-control" onclick="valueUpdate('snake-level',false)">−</button>
+								<div><input id="snake-level" class="input-int-pet controlled-input auto-width" type="number"></div>
+								<button class="value-control" onclick="valueUpdate('snake-level',true)">+</button>
+							</div>
+							<div class="inline-checkbox">
+								<input type="checkbox" class="pet-check" id="snake-equiped" name="snake-equiped" />
+								<label for="snake-equiped">Equipped</label>
+							</div>
+							<label class="evolve-pet" for="snake-evolve">Evolve level</label>
+							<input id="snake-evolve" class="input-int-pet-evolve controlled-input auto-width timed-hide" type="number" min="1">
+							<div id="snake-evolve-text" class="formated-number wrap-text show-hidden-input item-border"></div>
+							<div class="evolve-pet">Pet effect</div>
+							<div class="snake-effect wrap-text"></div>
+						</div>
+						<div class="data-item item-border pet-turtle item-pet">
+							<label for="turtle-level">Turtle level</label>
+							<div class="input-with-control">
+								<button class="value-control" onclick="valueUpdate('turtle-level',false)">−</button>
+								<div><input id="turtle-level" class="input-int-pet controlled-input auto-width" type="number"></div>
+								<button class="value-control" onclick="valueUpdate('turtle-level',true)">+</button>
+							</div>
+							<div class="inline-checkbox">
+								<input type="checkbox" class="pet-check" id="turtle-equiped" name="turtle-equiped" />
+								<label for="turtle-equiped">Equipped</label>
+							</div>
+							<label class="evolve-pet" for="turtle-evolve">Evolve level</label>
+							<input id="turtle-evolve" class="input-int-pet-evolve controlled-input auto-width timed-hide" type="number" min="1">
+							<div id="turtle-evolve-text" class="formated-number wrap-text show-hidden-input item-border"></div>
+							<div class="evolve-pet">Pet effect</div>
+							<div class="turtle-effect wrap-text"></div>
+						</div>
+						<div class="data-item item-border pet-cat item-pet">
+							<label for="cat-level">Cat level</label>
+							<div class="input-with-control">
+								<button class="value-control" onclick="valueUpdate('cat-level',false)">−</button>
+								<div><input id="cat-level" class="input-int-pet controlled-input auto-width" type="number"></div>
+								<button class="value-control" onclick="valueUpdate('cat-level',true)">+</button>
+							</div>
+							<div class="inline-checkbox">
+								<input type="checkbox" class="pet-check" id="cat-equiped" name="cat-equiped" />
+								<label for="cat-equiped">Equipped</label>
+							</div>
+							<label class="evolve-pet" for="cat-evolve">Evolve level</label>
+							<input id="cat-evolve" class="input-int-pet-evolve controlled-input auto-width timed-hide" type="number" min="1">
+							<div id="cat-evolve-text" class="formated-number wrap-text show-hidden-input item-border"></div>
+							<div class="evolve-pet">Pet effect</div>
+							<div class="cat-effect wrap-text"></div>
+						</div>
+						<div class="data-item item-border pet-mordek item-pet">
+							<label for="mordek-level">Mordek level</label>
+							<div class="input-with-control">
+								<button class="value-control" onclick="valueUpdate('mordek-level',false)">−</button>
+								<div><input id="mordek-level" class="input-int-pet controlled-input auto-width" type="number"></div>
+								<button class="value-control" onclick="valueUpdate('mordek-level',true)">+</button>
+							</div>
+							<div class="inline-checkbox">
+								<input type="checkbox" class="pet-check" id="mordek-equiped" name="mordek-equiped" />
+								<label for="mordek-equiped">Equipped</label>
+							</div>
+							<label class="evolve-pet" for="mordek-evolve">Evolve level</label>
+							<input id="mordek-evolve" class="input-int-pet-evolve controlled-input auto-width timed-hide" type="number" min="1">
+							<div id="mordek-evolve-text" class="formated-number wrap-text show-hidden-input item-border"></div>
+							<div class="evolve-pet">Pet effect</div>
+							<div class="mordek-effect wrap-text"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="tab_item_wrap item-border tab_pet">
+				<div class="main-title">Pet Evolution Cost Calculator</div>
+			</div>
+			<div class="tab_item_wrap item-border tab_pet">
+				<div class="data-category data-category-title item-border">
+					<div class="data-items data-items-flex">
+						<div class="data-item item-border pet-bird item-pet">
+							<div><span class="bold-title">Bird Evolution :</span></div>
+							<div>From level</div>
+							<div class="input-with-control">
+								<button class="value-control" onclick="valueUpdate('pet-tab-bird-evolution',false)">−</button>
+								<div><input id="pet-tab-bird-evolution" class="input-int-pet-evolve controlled-input auto-width" type="number"></div>
+								<button class="value-control" onclick="valueUpdate('pet-tab-bird-evolution',true)">+</button>
+							</div>
+							<div>To level</div>
+							<div class="input-with-control">
+								<button class="value-control" onclick="valueUpdate('pet-tab-bird-evolution-target',false)">−</button>
+								<div><input id="pet-tab-bird-evolution-target" class="input-int-pet-evolve controlled-input auto-width" type="number"></div>
+								<button class="value-control" onclick="valueUpdate('pet-tab-bird-evolution-target',true)">+</button>
+							</div>
+							<div class="evolve-pet">Ascension Bonus Cost :</div>
+							<div class="pet-tab-bird-evolution-cost">0</div>
+							<div>Time to gather :</div>
+							<div class="pet-tab-bird-evolution-cost-time">0</div>
+							<div class="evolve-pet">Total % progression :</div>
+							<div class="pet-tab-bird-evolution-progression">0</div>
+							<div>Ascension Bonus Cost per % progression :</div>
+							<div class="pet-tab-bird-evolution-progression-cost">0</div>							
+						</div>
+						<div class="data-item item-border pet-dog item-pet">
+							<div><span class="bold-title">Dog Evolution :</span></div>
+							<div>From level</div>
+							<div class="input-with-control">
+								<button class="value-control" onclick="valueUpdate('pet-tab-dog-evolution',false)">−</button>
+								<div><input id="pet-tab-dog-evolution" class="input-int-pet-evolve controlled-input auto-width" type="number"></div>
+								<button class="value-control" onclick="valueUpdate('pet-tab-dog-evolution',true)">+</button>
+							</div>
+							<div>To level</div>
+							<div class="input-with-control">
+								<button class="value-control" onclick="valueUpdate('pet-tab-dog-evolution-target',false)">−</button>
+								<div><input id="pet-tab-dog-evolution-target" class="input-int-pet-evolve controlled-input auto-width" type="number"></div>
+								<button class="value-control" onclick="valueUpdate('pet-tab-dog-evolution-target',true)">+</button>
+							</div>
+							<div class="evolve-pet">Ascension Bonus Cost :</div>
+							<div class="pet-tab-dog-evolution-cost">0</div>
+							<div>Time to gather :</div>
+							<div class="pet-tab-dog-evolution-cost-time">0</div>
+							<div class="evolve-pet">Total % progression :</div>
+							<div class="pet-tab-dog-evolution-progression">0</div>
+							<div>Ascension Bonus Cost per % progression :</div>
+							<div class="pet-tab-dog-evolution-progression-cost">0</div>								
+						</div>
+						<div class="data-item item-border pet-fox item-pet">
+							<div><span class="bold-title">Fox Evolution :</span></div>
+							<div>From level</div>
+							<div class="input-with-control">
+								<button class="value-control" onclick="valueUpdate('pet-tab-fox-evolution',false)">−</button>
+								<div><input id="pet-tab-fox-evolution" class="input-int-pet-evolve controlled-input auto-width" type="number"></div>
+								<button class="value-control" onclick="valueUpdate('pet-tab-fox-evolution',true)">+</button>
+							</div>
+							<div>To level</div>
+							<div class="input-with-control">
+								<button class="value-control" onclick="valueUpdate('pet-tab-fox-evolution-target',false)">−</button>
+								<div><input id="pet-tab-fox-evolution-target" class="input-int-pet-evolve controlled-input auto-width" type="number"></div>
+								<button class="value-control" onclick="valueUpdate('pet-tab-fox-evolution-target',true)">+</button>
+							</div>
+							<div class="evolve-pet">Ascension Bonus Cost :</div>
+							<div class="pet-tab-fox-evolution-cost">0</div>
+							<div>Time to gather :</div>
+							<div class="pet-tab-fox-evolution-cost-time">0</div>
+							<div class="evolve-pet">Total % progression :</div>
+							<div class="pet-tab-fox-evolution-progression">0</div>
+							<div>Ascension Bonus Cost per % progression :</div>
+							<div class="pet-tab-fox-evolution-progression-cost">0</div>								
+						</div>
+						<div class="data-item item-border pet-pinguin item-pet">
+							<div><span class="bold-title">Penguin Evolution :</span></div>
+							<div>From level</div>
+							<div class="input-with-control">
+								<button class="value-control" onclick="valueUpdate('pet-tab-pinguin-evolution',false)">−</button>
+								<div><input id="pet-tab-pinguin-evolution" class="input-int-pet-evolve controlled-input auto-width" type="number"></div>
+								<button class="value-control" onclick="valueUpdate('pet-tab-pinguin-evolution',true)">+</button>
+							</div>
+							<div>To level</div>
+							<div class="input-with-control">
+								<button class="value-control" onclick="valueUpdate('pet-tab-pinguin-evolution-target',false)">−</button>
+								<div><input id="pet-tab-pinguin-evolution-target" class="input-int-pet-evolve controlled-input auto-width" type="number"></div>
+								<button class="value-control" onclick="valueUpdate('pet-tab-pinguin-evolution-target',true)">+</button>
+							</div>
+							<div class="evolve-pet">Ascension Bonus Cost :</div>
+							<div class="pet-tab-pinguin-evolution-cost">0</div>
+							<div>Time to gather :</div>
+							<div class="pet-tab-pinguin-evolution-cost-time">0</div>
+							<div class="evolve-pet">Total % progression :</div>
+							<div class="pet-tab-pinguin-evolution-progression">0</div>
+							<div>Ascension Bonus Cost per % progression :</div>
+							<div class="pet-tab-pinguin-evolution-progression-cost">0</div>								
+						</div>
+						<div class="data-item item-border pet-snake item-pet">
+							<div><span class="bold-title">Snake Evolution :</span></div>
+							<div>From level</div>
+							<div class="input-with-control">
+								<button class="value-control" onclick="valueUpdate('pet-tab-snake-evolution',false)">−</button>
+								<div><input id="pet-tab-snake-evolution" class="input-int-pet-evolve controlled-input auto-width" type="number"></div>
+								<button class="value-control" onclick="valueUpdate('pet-tab-snake-evolution',true)">+</button>
+							</div>
+							<div>To level</div>
+							<div class="input-with-control">
+								<button class="value-control" onclick="valueUpdate('pet-tab-snake-evolution-target',false)">−</button>
+								<div><input id="pet-tab-snake-evolution-target" class="input-int-pet-evolve controlled-input auto-width" type="number"></div>
+								<button class="value-control" onclick="valueUpdate('pet-tab-snake-evolution-target',true)">+</button>
+							</div>
+							<div class="evolve-pet">Ascension Bonus Cost :</div>
+							<div class="pet-tab-snake-evolution-cost">0</div>
+							<div>Time to gather :</div>
+							<div class="pet-tab-snake-evolution-cost-time">0</div>
+							<div class="evolve-pet">Total % progression :</div>
+							<div class="pet-tab-snake-evolution-progression">0</div>
+							<div>Ascension Bonus Cost per % progression :</div>
+							<div class="pet-tab-snake-evolution-progression-cost">0</div>								
+						</div>
+						<div class="data-item item-border pet-turtle item-pet">
+							<div><span class="bold-title">Turtle Evolution :</span></div>
+							<div>From level</div>
+							<div class="input-with-control">
+								<button class="value-control" onclick="valueUpdate('pet-tab-turtle-evolution',false)">−</button>
+								<div><input id="pet-tab-turtle-evolution" class="input-int-pet-evolve controlled-input auto-width" type="number"></div>
+								<button class="value-control" onclick="valueUpdate('pet-tab-turtle-evolution',true)">+</button>
+							</div>
+							<div>To level</div>
+							<div class="input-with-control">
+								<button class="value-control" onclick="valueUpdate('pet-tab-turtle-evolution-target',false)">−</button>
+								<div><input id="pet-tab-turtle-evolution-target" class="input-int-pet-evolve controlled-input auto-width" type="number"></div>
+								<button class="value-control" onclick="valueUpdate('pet-tab-turtle-evolution-target',true)">+</button>
+							</div>
+							<div class="evolve-pet">Ascension Bonus Cost :</div>
+							<div class="pet-tab-turtle-evolution-cost">0</div>
+							<div>Time to gather :</div>
+							<div class="pet-tab-turtle-evolution-cost-time">0</div>
+							<div class="evolve-pet">Total % progression :</div>
+							<div class="pet-tab-turtle-evolution-progression">0</div>
+							<div>Ascension Bonus Cost per % progression :</div>
+							<div class="pet-tab-turtle-evolution-progression-cost">0</div>								
+						</div>
+						<div class="data-item item-border pet-cat item-pet">
+							<div><span class="bold-title">Cat Evolution :</span></div>
+							<div>From level</div>
+							<div class="input-with-control">
+								<button class="value-control" onclick="valueUpdate('pet-tab-cat-evolution',false)">−</button>
+								<div><input id="pet-tab-cat-evolution" class="input-int-pet-evolve controlled-input auto-width" type="number"></div>
+								<button class="value-control" onclick="valueUpdate('pet-tab-cat-evolution',true)">+</button>
+							</div>
+							<div>To level</div>
+							<div class="input-with-control">
+								<button class="value-control" onclick="valueUpdate('pet-tab-cat-evolution-target',false)">−</button>
+								<div><input id="pet-tab-cat-evolution-target" class="input-int-pet-evolve controlled-input auto-width" type="number"></div>
+								<button class="value-control" onclick="valueUpdate('pet-tab-cat-evolution-target',true)">+</button>
+							</div>
+							<div class="evolve-pet">Ascension Bonus Cost :</div>
+							<div class="pet-tab-cat-evolution-cost">0</div>
+							<div>Time to gather :</div>
+							<div class="pet-tab-cat-evolution-cost-time">0</div>
+							<div class="evolve-pet">Total % progression :</div>
+							<div class="pet-tab-cat-evolution-progression">0</div>
+							<div>Ascension Bonus Cost per % progression :</div>
+							<div class="pet-tab-cat-evolution-progression-cost">0</div>								
+						</div>
+						<div class="data-item item-border pet-mordek item-pet">
+							<div><span class="bold-title">Mordek Evolution :</span></div>
+							<div>From level</div>
+							<div class="input-with-control">
+								<button class="value-control" onclick="valueUpdate('pet-tab-mordek-evolution',false)">−</button>
+								<div><input id="pet-tab-mordek-evolution" class="input-int-pet-evolve controlled-input auto-width" type="number"></div>
+								<button class="value-control" onclick="valueUpdate('pet-tab-mordek-evolution',true)">+</button>
+							</div>
+							<div>To level</div>
+							<div class="input-with-control">
+								<button class="value-control" onclick="valueUpdate('pet-tab-mordek-evolution-target',false)">−</button>
+								<div><input id="pet-tab-mordek-evolution-target" class="input-int-pet-evolve controlled-input auto-width" type="number"></div>
+								<button class="value-control" onclick="valueUpdate('pet-tab-mordek-evolution-target',true)">+</button>
+							</div>
+							<div class="evolve-pet">Ascension Bonus Cost :</div>
+							<div class="pet-tab-mordek-evolution-cost">0</div>
+							<div>Time to gather :</div>
+							<div class="pet-tab-mordek-evolution-cost-time">0</div>
+							<div class="evolve-pet">Total % progression :</div>
+							<div class="pet-tab-mordek-evolution-progression">0</div>
+							<div>Ascension Bonus Cost per % progression :</div>
+							<div class="pet-tab-mordek-evolution-progression-cost">0</div>								
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="tab_item_wrap item-border tab_pet">
+				<div class="data-title title-alone item-border title-online-drop">
+					<div><span class="bold-title">Cumulative Calculation</span></div>
+					<div class="calculation"><span>Total Ascension Bonus needed : </span><span class="total-evolution-cost-all-pets"></span></div>
+					<div class="calculation"><span>Total Time to gather : </span><span class="total-evolution-time-all-pets"></span></div>
+				</div>
+				<div class="data-category data-category-title item-border">
+					<div id="cumulative-calculation-box" class="data-items data-items-flex flex-duo"></div>
+				</div>
+			</div>
+			<div class="tab_item_wrap item-border tab_craft">
+				<div class="main-title">Sky Forge & Resources Calculator</div>
+				<div>Note : lv.<span class="craft-level-cap">x</span> is max possible level, lv.<span class="craft-level-cap-maxed">x</span> is lv.<span class="craft-level-cap">x</span> with maxed craft xp, it unlocks an achievement (per item)</div>
+			</div>
+			<div class="tab_item_wrap item-border tab_craft">
+
+				<div class="data-title title-alone item-border title-online-drop title-flex">
+					<div><span class="bold-title">Ring :</span></div>
+					<div class="input-with-control">
+						<div>From level</div>
+						<button class="value-control" onclick="valueUpdate('craft-ring-level',false)">−</button>
+						<div><input id="craft-ring-level" class="input-int-craft controlled-input auto-width" type="number"></div>
+						<button class="value-control" onclick="valueUpdate('craft-ring-level',true)">+</button>
+						<div>to</div>
+						<button class="value-control" onclick="valueUpdate('craft-ring-target',false)">−</button>
+						<div><input id="craft-ring-target" class="input-int-craft controlled-input auto-width" type="number"></div>
+						<button class="value-control" onclick="valueUpdate('craft-ring-target',true)">+</button>
+						<div>XP : <input id="craft-ring-xp" class="input-int craft-xp controlled-input auto-width" type="text"> / <span class="ring-max-xp"></span></div>
+					</div>
+				</div>
+				<div class="data-category data-category-title item-border">
+					<div class="data-items data-items-flex">
+						<div class="data-item-data-line">
+							<div class="data-item-data-line-title item-border item-no-border-bottom">Gold</div>
+							<div class="data-item-data-line-craft item-border">
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Need :</div>
+									<div class="data-item-data-line-crafting-amount gold-needed-ring">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Missing :</div>
+									<div class="data-item-data-line-crafting-amount gold-miss-ring">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Nb Craft :</div>
+									<div class="data-item-data-line-crafting-amount nb-craft-ring"></div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item-data-line">
+							<div class="data-item-data-line-title item-border item-no-border-bottom">Wood</div>
+							<div class="data-item-data-line-craft item-border">
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Need :</div>
+									<div class="data-item-data-line-crafting-amount wood-needed-ring">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Missing :</div>
+									<div class="data-item-data-line-crafting-amount wood-miss-ring">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Gem Cost :</div>
+									<div class="data-item-data-line-crafting-amount wood-cost-ring">0</div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item-data-line">
+							<div class="data-item-data-line-title item-border item-no-border-bottom">Stone</div>
+							<div class="data-item-data-line-craft item-border">
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Need :</div>
+									<div class="data-item-data-line-crafting-amount stone-needed-ring">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Missing :</div>
+									<div class="data-item-data-line-crafting-amount stone-miss-ring">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Gem Cost :</div>
+									<div class="data-item-data-line-crafting-amount stone-cost-ring">0</div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item-data-line">
+							<div class="data-item-data-line-title item-border item-no-border-bottom">Metal</div>
+							<div class="data-item-data-line-craft item-border">
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Need :</div>
+									<div class="data-item-data-line-crafting-amount metal-needed-ring">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Missing :</div>
+									<div class="data-item-data-line-crafting-amount metal-miss-ring">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Gem Cost :</div>
+									<div class="data-item-data-line-crafting-amount metal-cost-ring">0</div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item-data-line">
+							<div class="data-item-data-line-title item-border item-no-border-bottom">Gem</div>
+							<div class="data-item-data-line-craft item-border">
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Need :</div>
+									<div class="data-item-data-line-crafting-amount gem-needed-ring">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Total Gem Need :</div>
+									<div class="data-item-data-line-crafting-amount gem-cost-ring">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Total Gem Missing :</div>
+									<div class="data-item-data-line-crafting-amount gem-cost-miss-ring">0</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="data-title title-alone item-border title-online-drop title-flex">
+					<div><span class="bold-title">Armor :</span></div>
+					<div class="input-with-control">
+						<div>From level</div>
+						<button class="value-control" onclick="valueUpdate('craft-armor-level',false)">−</button>
+						<div><input id="craft-armor-level" class="input-int-craft controlled-input auto-width" type="number"></div>
+						<button class="value-control" onclick="valueUpdate('craft-armor-level',true)">+</button>
+						<div>to</div>
+						<button class="value-control" onclick="valueUpdate('craft-armor-target',false)">−</button>
+						<div><input id="craft-armor-target" class="input-int-craft controlled-input auto-width" type="number"></div>
+						<button class="value-control" onclick="valueUpdate('craft-armor-target',true)">+</button>
+						<div>XP : <input id="craft-armor-xp" class="input-int craft-xp controlled-input auto-width" type="text"> / <span class="armor-max-xp"></span></div>
+					</div>
+				</div>
+				<div class="data-category data-category-title item-border">
+					<div class="data-items data-items-flex">
+						<div class="data-item-data-line">
+							<div class="data-item-data-line-title item-border item-no-border-bottom">Gold</div>
+							<div class="data-item-data-line-craft item-border">
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Need :</div>
+									<div class="data-item-data-line-crafting-amount gold-needed-armor">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Missing :</div>
+									<div class="data-item-data-line-crafting-amount gold-miss-armor">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Nb Craft :</div>
+									<div class="data-item-data-line-crafting-amount nb-craft-armor"></div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item-data-line">
+							<div class="data-item-data-line-title item-border item-no-border-bottom">Wood</div>
+							<div class="data-item-data-line-craft item-border">
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Need :</div>
+									<div class="data-item-data-line-crafting-amount wood-needed-armor">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Missing :</div>
+									<div class="data-item-data-line-crafting-amount wood-miss-armor">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Gem Cost :</div>
+									<div class="data-item-data-line-crafting-amount wood-cost-armor">0</div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item-data-line">
+							<div class="data-item-data-line-title item-border item-no-border-bottom">Stone</div>
+							<div class="data-item-data-line-craft item-border">
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Need :</div>
+									<div class="data-item-data-line-crafting-amount stone-needed-armor">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Missing :</div>
+									<div class="data-item-data-line-crafting-amount stone-miss-armor">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Gem Cost :</div>
+									<div class="data-item-data-line-crafting-amount stone-cost-armor">0</div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item-data-line">
+							<div class="data-item-data-line-title item-border item-no-border-bottom">Metal</div>
+							<div class="data-item-data-line-craft item-border">
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Need :</div>
+									<div class="data-item-data-line-crafting-amount metal-needed-armor">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Missing :</div>
+									<div class="data-item-data-line-crafting-amount metal-miss-armor">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Gem Cost :</div>
+									<div class="data-item-data-line-crafting-amount metal-cost-armor">0</div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item-data-line">
+							<div class="data-item-data-line-title item-border item-no-border-bottom">Gem</div>
+							<div class="data-item-data-line-craft item-border">
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Need :</div>
+									<div class="data-item-data-line-crafting-amount gem-needed-armor">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Total Gem Need :</div>
+									<div class="data-item-data-line-crafting-amount gem-cost-armor">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Total Gem Missing :</div>
+									<div class="data-item-data-line-crafting-amount gem-cost-miss-armor">0</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="data-title title-alone item-border title-online-drop title-flex">
+					<div><span class="bold-title">Sword :</span></div>
+					<div class="input-with-control">
+						<div>From level</div>
+						<button class="value-control" onclick="valueUpdate('craft-sword-level',false)">−</button>
+						<div><input id="craft-sword-level" class="input-int-craft controlled-input auto-width" type="number"></div>
+						<button class="value-control" onclick="valueUpdate('craft-sword-level',true)">+</button>
+						<div>to</div>
+						<button class="value-control" onclick="valueUpdate('craft-sword-target',false)">−</button>
+						<div><input id="craft-sword-target" class="input-int-craft controlled-input auto-width" type="number"></div>
+						<button class="value-control" onclick="valueUpdate('craft-sword-target',true)">+</button>
+						<div>XP : <input id="craft-sword-xp" class="input-int craft-xp controlled-input auto-width" type="text"> / <span class="sword-max-xp"></span></div>
+					</div>
+				</div>
+				<div class="data-category data-category-title item-border">
+					<div class="data-items data-items-flex">
+						<div class="data-item-data-line">
+							<div class="data-item-data-line-title item-border item-no-border-bottom">Gold</div>
+							<div class="data-item-data-line-craft item-border">
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Need :</div>
+									<div class="data-item-data-line-crafting-amount gold-needed-sword">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Missing :</div>
+									<div class="data-item-data-line-crafting-amount gold-miss-sword">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Nb Craft :</div>
+									<div class="data-item-data-line-crafting-amount nb-craft-sword"></div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item-data-line">
+							<div class="data-item-data-line-title item-border item-no-border-bottom">Wood</div>
+							<div class="data-item-data-line-craft item-border">
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Need :</div>
+									<div class="data-item-data-line-crafting-amount wood-needed-sword">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Missing :</div>
+									<div class="data-item-data-line-crafting-amount wood-miss-sword">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Gem Cost :</div>
+									<div class="data-item-data-line-crafting-amount wood-cost-sword">0</div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item-data-line">
+							<div class="data-item-data-line-title item-border item-no-border-bottom">Stone</div>
+							<div class="data-item-data-line-craft item-border">
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Need :</div>
+									<div class="data-item-data-line-crafting-amount stone-needed-sword">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Missing :</div>
+									<div class="data-item-data-line-crafting-amount stone-miss-sword">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Gem Cost :</div>
+									<div class="data-item-data-line-crafting-amount stone-cost-sword">0</div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item-data-line">
+							<div class="data-item-data-line-title item-border item-no-border-bottom">Metal</div>
+							<div class="data-item-data-line-craft item-border">
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Need :</div>
+									<div class="data-item-data-line-crafting-amount metal-needed-sword">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Missing :</div>
+									<div class="data-item-data-line-crafting-amount metal-miss-sword">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Gem Cost :</div>
+									<div class="data-item-data-line-crafting-amount metal-cost-sword">0</div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item-data-line">
+							<div class="data-item-data-line-title item-border item-no-border-bottom">Gem</div>
+							<div class="data-item-data-line-craft item-border">
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Need :</div>
+									<div class="data-item-data-line-crafting-amount gem-needed-sword">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Total Gem Need :</div>
+									<div class="data-item-data-line-crafting-amount gem-cost-sword">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Total Gem Missing :</div>
+									<div class="data-item-data-line-crafting-amount gem-cost-miss-sword">0</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="data-title title-alone title-online-drop item-border">
+					<div class="bold-title">Total</div>
+				</div>
+				<div class="data-category data-category-title item-border">
+					<div class="data-items data-items-flex">
+						<div class="data-item-data-line">
+							<div class="data-item-data-line-title item-border item-no-border-bottom">Gold</div>
+							<div class="data-item-data-line-craft item-border">
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Need :</div>
+									<div class="data-item-data-line-crafting-amount gold-needed-all">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Missing :</div>
+									<div class="data-item-data-line-crafting-amount gold-miss-all">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Nb Craft :</div>
+									<div class="data-item-data-line-crafting-amount nb-craft-all"></div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item-data-line">
+							<div class="data-item-data-line-title item-border item-no-border-bottom">Wood</div>
+							<div class="data-item-data-line-craft item-border">
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Need :</div>
+									<div class="data-item-data-line-crafting-amount wood-needed-all">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Missing :</div>
+									<div class="data-item-data-line-crafting-amount wood-miss-all">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Gem Cost :</div>
+									<div class="data-item-data-line-crafting-amount wood-cost-all">0</div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item-data-line">
+							<div class="data-item-data-line-title item-border item-no-border-bottom">Stone</div>
+							<div class="data-item-data-line-craft item-border">
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Need :</div>
+									<div class="data-item-data-line-crafting-amount stone-needed-all">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Missing :</div>
+									<div class="data-item-data-line-crafting-amount stone-miss-all">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Gem Cost :</div>
+									<div class="data-item-data-line-crafting-amount stone-cost-all">0</div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item-data-line">
+							<div class="data-item-data-line-title item-border item-no-border-bottom">Metal</div>
+							<div class="data-item-data-line-craft item-border">
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Need :</div>
+									<div class="data-item-data-line-crafting-amount metal-needed-all">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Missing :</div>
+									<div class="data-item-data-line-crafting-amount metal-miss-all">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Gem Cost :</div>
+									<div class="data-item-data-line-crafting-amount metal-cost-all">0</div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item-data-line">
+							<div class="data-item-data-line-title item-border item-no-border-bottom">Gem</div>
+							<div class="data-item-data-line-craft item-border">
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Need :</div>
+									<div class="data-item-data-line-crafting-amount gem-needed-all">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Total Gem Need :</div>
+									<div class="data-item-data-line-crafting-amount gem-cost-all">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Total Gem Missing :</div>
+									<div class="data-item-data-line-crafting-amount gem-cost-miss-all">0</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="data-title title-alone title-online-drop item-border">
+					<div class="bold-title">Total time to harvest</div>
+				</div>
+				<div class="data-category data-category-title item-border">
+					<div class="data-items data-items-flex">
+						<div class="data-item-data-line">
+							<div class="data-item-data-line-title item-border">Gold</div>
+							<div class="data-item-data-line-craft item-border">
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Gods Speed Uses :</div>
+									<div class="data-item-data-line-crafting-amount gold-harvest-time-godsspeed">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">No pet :</div>
+									<div class="data-item-data-line-crafting-amount gold-harvest-time-nopet">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Current Pet :</div>
+									<div class="data-item-data-line-crafting-amount gold-harvest-time-equipet">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Snake :</div>
+									<div class="data-item-data-line-crafting-amount gold-harvest-time-pet">0</div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item-data-line">
+							<div class="data-item-data-line-title item-border">Wood</div>
+							<div class="data-item-data-line-craft item-border">
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Gods Speed Uses :</div>
+									<div class="data-item-data-line-crafting-amount wood-harvest-time-godsspeed">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">No pet :</div>
+									<div class="data-item-data-line-crafting-amount wood-harvest-time-nopet">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Current Pet :</div>
+									<div class="data-item-data-line-crafting-amount wood-harvest-time-equipet">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Bird :</div>
+									<div class="data-item-data-line-crafting-amount wood-harvest-time-pet">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Mordek :</div>
+									<div class="data-item-data-line-crafting-amount wood-harvest-time-mordek">0</div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item-data-line">
+							<div class="data-item-data-line-title item-border">Stone</div>
+							<div class="data-item-data-line-craft item-border">
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Gods Speed Uses :</div>
+									<div class="data-item-data-line-crafting-amount stone-harvest-time-godsspeed">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">No pet :</div>
+									<div class="data-item-data-line-crafting-amount stone-harvest-time-nopet">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Current Pet :</div>
+									<div class="data-item-data-line-crafting-amount stone-harvest-time-equipet">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Dog :</div>
+									<div class="data-item-data-line-crafting-amount stone-harvest-time-pet">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Mordek :</div>
+									<div class="data-item-data-line-crafting-amount stone-harvest-time-mordek">0</div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item-data-line">
+							<div class="data-item-data-line-title item-border">Metal</div>
+							<div class="data-item-data-line-craft item-border">
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Gods Speed Uses :</div>
+									<div class="data-item-data-line-crafting-amount metal-harvest-time-godsspeed">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">No pet :</div>
+									<div class="data-item-data-line-crafting-amount metal-harvest-time-nopet">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Current Pet :</div>
+									<div class="data-item-data-line-crafting-amount metal-harvest-time-equipet">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Fox :</div>
+									<div class="data-item-data-line-crafting-amount metal-harvest-time-pet">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Mordek :</div>
+									<div class="data-item-data-line-crafting-amount metal-harvest-time-mordek">0</div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item-data-line">
+							<div class="data-item-data-line-title item-border">Gem</div>
+							<div class="data-item-data-line-craft item-border">
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">No pet :</div>
+									<div class="data-item-data-line-crafting-amount gem-harvest-time-nopet">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Current Pet :</div>
+									<div class="data-item-data-line-crafting-amount gem-harvest-time-equipet">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Penguin :</div>
+									<div class="data-item-data-line-crafting-amount gem-harvest-time-pet">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Mordek :</div>
+									<div class="data-item-data-line-crafting-amount gem-harvest-time-mordek">0</div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item-data-line">
+							<div class="data-item-data-line-title item-border">Gem (Inc. Gems for buying resources)</div>
+							<div class="data-item-data-line-craft item-border">
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">No pet :</div>
+									<div class="data-item-data-line-crafting-amount gem-buying-harvest-time-nopet">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Current Pet :</div>
+									<div class="data-item-data-line-crafting-amount gem-buying-harvest-time-equipet">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Penguin :</div>
+									<div class="data-item-data-line-crafting-amount gem-buying-harvest-time-pet">0</div>
+								</div>
+								<div class="data-item-data-line-crafting">
+									<div class="data-item-data-line-crafting-title">Mordek :</div>
+									<div class="data-item-data-line-crafting-amount gem-buying-harvest-time-mordek">0</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="tab_item_wrap item-border tab_craft">
+				<div class="main-title">Purchases to Drain Resources</div>
+			</div>
+			<div class="tab_item_wrap item-border tab_craft">
+				<div class="data-title title-alone title-online-drop item-border">
+					<div class="bold-title">Ring</div>
+				</div>
+				<div class="data-category data-category-title item-border">
+					<div class="data-items data-items-flex">
+						<div class="data-item item-offline-drop-wood">
+							<div class="data-item-data-line">
+								<div class="data-item-data-line-title item-border drain-title item-no-border-bottom">To empty Wood</div>
+								<div class="data-item-data-line-offline item-border drain-data-line">
+									<div class="data-item-data-line-crafting drain-line">
+										<div class="data-item-data-line-crafting-title">Rings to Craft : </div>
+										<div class="data-item-data-line-crafting-amount drain-purchase-ring-wood-quantity">0</div>
+									</div>
+									<div class="data-item-data-line-crafting drain-line">
+										<div class="data-item-data-line-crafting-title">Stone to buy : </div>
+										<div class="data-item-data-line-crafting-amount drain-purchase-ring-wood-missing-stone">0</div>
+									</div>
+									<div class="data-item-data-line-crafting drain-line">
+										<div class="data-item-data-line-crafting-title">Metal to Buy : </div>
+										<div class="data-item-data-line-crafting-amount drain-purchase-ring-wood-missing-metal">0</div>
+									</div>
+									<div class="data-item-data-line-crafting drain-line">
+										<div class="data-item-data-line-crafting-title">Gem Cost : </div>
+										<div class="data-item-data-line-crafting-amount drain-purchase-ring-wood-gemcost">0</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item item-offline-drop-wood">
+							<div class="data-item-data-line">
+								<div class="data-item-data-line-title item-border drain-title item-no-border-bottom">To empty Stone</div>
+								<div class="data-item-data-line-offline item-border drain-data-line">
+									<div class="data-item-data-line-crafting">
+										<div class="data-item-data-line-crafting-title">Rings to Craft : </div>
+										<div class="data-item-data-line-crafting-amount drain-purchase-ring-stone-quantity">0</div>
+									</div>
+									<div class="data-item-data-line-crafting">
+										<div class="data-item-data-line-crafting-title">Wood to buy : </div>
+										<div class="data-item-data-line-crafting-amount drain-purchase-ring-stone-missing-wood">0</div>
+									</div>
+									<div class="data-item-data-line-crafting">
+										<div class="data-item-data-line-crafting-title">Metal to Buy : </div>
+										<div class="data-item-data-line-crafting-amount drain-purchase-ring-stone-missing-metal">0</div>
+									</div>
+									<div class="data-item-data-line-crafting">
+										<div class="data-item-data-line-crafting-title">Gem Cost : </div>
+										<div class="data-item-data-line-crafting-amount drain-purchase-ring-stone-gemcost">0</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item item-offline-drop-wood">
+							<div class="data-item-data-line">
+								<div class="data-item-data-line-title item-border drain-title item-no-border-bottom">To empty Metal</div>
+								<div class="data-item-data-line-offline item-border drain-data-line">
+									<div class="data-item-data-line-crafting">
+										<div class="data-item-data-line-crafting-title">Rings to Craft : </div>
+										<div class="data-item-data-line-crafting-amount drain-purchase-ring-metal-quantity">0</div>
+									</div>
+									<div class="data-item-data-line-crafting">
+										<div class="data-item-data-line-crafting-title">Wood to buy : </div>
+										<div class="data-item-data-line-crafting-amount drain-purchase-ring-metal-missing-wood">0</div>
+									</div>
+									<div class="data-item-data-line-crafting">
+										<div class="data-item-data-line-crafting-title">Stone to Buy : </div>
+										<div class="data-item-data-line-crafting-amount drain-purchase-ring-metal-missing-stone">0</div>
+									</div>
+									<div class="data-item-data-line-crafting">
+										<div class="data-item-data-line-crafting-title">Gem Cost : </div>
+										<div class="data-item-data-line-crafting-amount drain-purchase-ring-metal-gemcost">0</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="data-title title-alone title-online-drop item-border">
+					<div class="bold-title">Armor</div>
+				</div>
+				<div class="data-category data-category-title item-border">
+					<div class="data-items data-items-flex">
+						<div class="data-item item-offline-drop-wood">
+							<div class="data-item-data-line">
+								<div class="data-item-data-line-title item-border drain-title item-no-border-bottom">To empty Wood</div>
+								<div class="data-item-data-line-offline item-border drain-data-line">
+									<div class="data-item-data-line-crafting drain-line">
+										<div class="data-item-data-line-crafting-title">Armors to Craft : </div>
+										<div class="data-item-data-line-crafting-amount drain-purchase-armor-wood-quantity">0</div>
+									</div>
+									<div class="data-item-data-line-crafting drain-line">
+										<div class="data-item-data-line-crafting-title">Stone to buy : </div>
+										<div class="data-item-data-line-crafting-amount drain-purchase-armor-wood-missing-stone">0</div>
+									</div>
+									<div class="data-item-data-line-crafting drain-line">
+										<div class="data-item-data-line-crafting-title">Metal to Buy : </div>
+										<div class="data-item-data-line-crafting-amount drain-purchase-armor-wood-missing-metal">0</div>
+									</div>
+									<div class="data-item-data-line-crafting drain-line">
+										<div class="data-item-data-line-crafting-title">Gem Cost : </div>
+										<div class="data-item-data-line-crafting-amount drain-purchase-armor-wood-gemcost">0</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item item-offline-drop-wood">
+							<div class="data-item-data-line">
+								<div class="data-item-data-line-title item-border drain-title item-no-border-bottom">To empty Stone</div>
+								<div class="data-item-data-line-offline item-border drain-data-line">
+									<div class="data-item-data-line-crafting">
+										<div class="data-item-data-line-crafting-title">Armors to Craft : </div>
+										<div class="data-item-data-line-crafting-amount drain-purchase-armor-stone-quantity">0</div>
+									</div>
+									<div class="data-item-data-line-crafting">
+										<div class="data-item-data-line-crafting-title">Wood to buy : </div>
+										<div class="data-item-data-line-crafting-amount drain-purchase-armor-stone-missing-wood">0</div>
+									</div>
+									<div class="data-item-data-line-crafting">
+										<div class="data-item-data-line-crafting-title">Metal to Buy : </div>
+										<div class="data-item-data-line-crafting-amount drain-purchase-armor-stone-missing-metal">0</div>
+									</div>
+									<div class="data-item-data-line-crafting">
+										<div class="data-item-data-line-crafting-title">Gem Cost : </div>
+										<div class="data-item-data-line-crafting-amount drain-purchase-armor-stone-gemcost">0</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item item-offline-drop-wood">
+							<div class="data-item-data-line">
+								<div class="data-item-data-line-title item-border drain-title item-no-border-bottom">To empty Metal</div>
+								<div class="data-item-data-line-offline item-border drain-data-line">
+									<div class="data-item-data-line-crafting">
+										<div class="data-item-data-line-crafting-title">Armors to Craft : </div>
+										<div class="data-item-data-line-crafting-amount drain-purchase-armor-metal-quantity">0</div>
+									</div>
+									<div class="data-item-data-line-crafting">
+										<div class="data-item-data-line-crafting-title">Wood to buy : </div>
+										<div class="data-item-data-line-crafting-amount drain-purchase-armor-metal-missing-wood">0</div>
+									</div>
+									<div class="data-item-data-line-crafting">
+										<div class="data-item-data-line-crafting-title">Stone to Buy : </div>
+										<div class="data-item-data-line-crafting-amount drain-purchase-armor-metal-missing-stone">0</div>
+									</div>
+									<div class="data-item-data-line-crafting">
+										<div class="data-item-data-line-crafting-title">Gem Cost : </div>
+										<div class="data-item-data-line-crafting-amount drain-purchase-armor-metal-gemcost">0</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="data-title title-alone title-online-drop item-border">
+					<div class="bold-title">Sword</div>
+				</div>
+				<div class="data-category data-category-title item-border">
+					<div class="data-items data-items-flex">
+						<div class="data-item item-offline-drop-wood">
+							<div class="data-item-data-line">
+								<div class="data-item-data-line-title item-border drain-title item-no-border-bottom">To empty Wood</div>
+								<div class="data-item-data-line-offline item-border drain-data-line">
+									<div class="data-item-data-line-crafting drain-line">
+										<div class="data-item-data-line-crafting-title">Swords to Craft : </div>
+										<div class="data-item-data-line-crafting-amount drain-purchase-sword-wood-quantity">0</div>
+									</div>
+									<div class="data-item-data-line-crafting drain-line">
+										<div class="data-item-data-line-crafting-title">Stone to buy : </div>
+										<div class="data-item-data-line-crafting-amount drain-purchase-sword-wood-missing-stone">0</div>
+									</div>
+									<div class="data-item-data-line-crafting drain-line">
+										<div class="data-item-data-line-crafting-title">Metal to Buy : </div>
+										<div class="data-item-data-line-crafting-amount drain-purchase-sword-wood-missing-metal">0</div>
+									</div>
+									<div class="data-item-data-line-crafting drain-line">
+										<div class="data-item-data-line-crafting-title">Gem Cost : </div>
+										<div class="data-item-data-line-crafting-amount drain-purchase-sword-wood-gemcost">0</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item item-offline-drop-wood">
+							<div class="data-item-data-line">
+								<div class="data-item-data-line-title item-border drain-title item-no-border-bottom">To empty Stone</div>
+								<div class="data-item-data-line-offline item-border drain-data-line">
+									<div class="data-item-data-line-crafting">
+										<div class="data-item-data-line-crafting-title">Swords to Craft : </div>
+										<div class="data-item-data-line-crafting-amount drain-purchase-sword-stone-quantity">0</div>
+									</div>
+									<div class="data-item-data-line-crafting">
+										<div class="data-item-data-line-crafting-title">Wood to buy : </div>
+										<div class="data-item-data-line-crafting-amount drain-purchase-sword-stone-missing-wood">0</div>
+									</div>
+									<div class="data-item-data-line-crafting">
+										<div class="data-item-data-line-crafting-title">Metal to Buy : </div>
+										<div class="data-item-data-line-crafting-amount drain-purchase-sword-stone-missing-metal">0</div>
+									</div>
+									<div class="data-item-data-line-crafting">
+										<div class="data-item-data-line-crafting-title">Gem Cost : </div>
+										<div class="data-item-data-line-crafting-amount drain-purchase-sword-stone-gemcost">0</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item item-offline-drop-wood">
+							<div class="data-item-data-line">
+								<div class="data-item-data-line-title item-border drain-title item-no-border-bottom">To empty Metal</div>
+								<div class="data-item-data-line-offline item-border drain-data-line">
+									<div class="data-item-data-line-crafting">
+										<div class="data-item-data-line-crafting-title">Swords to Craft : </div>
+										<div class="data-item-data-line-crafting-amount drain-purchase-sword-metal-quantity">0</div>
+									</div>
+									<div class="data-item-data-line-crafting">
+										<div class="data-item-data-line-crafting-title">Wood to buy : </div>
+										<div class="data-item-data-line-crafting-amount drain-purchase-sword-metal-missing-wood">0</div>
+									</div>
+									<div class="data-item-data-line-crafting">
+										<div class="data-item-data-line-crafting-title">Stone to Buy : </div>
+										<div class="data-item-data-line-crafting-amount drain-purchase-sword-metal-missing-stone">0</div>
+									</div>
+									<div class="data-item-data-line-crafting">
+										<div class="data-item-data-line-crafting-title">Gem Cost : </div>
+										<div class="data-item-data-line-crafting-amount drain-purchase-sword-metal-gemcost">0</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="tab_item_wrap item-border tab_mordek">
+				<div class="main-data">
+					<div class="main-title">Boss Fight Simulator
+						<div class="mordek-fight-result result-ok">VICTORY</div>
+						<div class="mordek-fight-result result-ko">DEFEAT<span class="result-nbtry"></span></div>
+						<div class="mordek-fight-duration"></div>
+					</div>			
+					<div class="ascension-info">
+						<div class="boss-selection">
+							<div class="select_box">
+								<select class="button_select select-boss-type" onchange="updateBossType()">
+									<option selected value="0">Mordek</option>
+									<option value="1">Loyalist</option>
+								</select>
+							</div>
+						</div>							
+						<div class="mordek-fight-level">
+							<div><span class="selected-boss">Mordek</span> level</div>
+							<div class="input-with-control">
+								<button class="value-control" onclick="valueUpdate('fight-boss-level',false)">−</button>
+								<div><input id="fight-boss-level" class="fight-boss-level controlled-input auto-width" type="number"></div>
+								<button class="value-control" onclick="valueUpdate('fight-boss-level',true)">+</button>
+							</div>
+						</div>
+						<div class="mordek-fight-switch">
+							<div>Using Fire Blade + Stone Skin</div>
+							<label class="switch">
+								<input type="checkbox" class="fight-use-inner" onchange="updateBossFight()">
+								<span class="slider round"></span>
+							</label>
+						</div>
+						<div class="mordek-fight-sim">
+							<button id="mordek-fight-button" class="button" onclick="doBossFight()">Simulate Fight</button>
+							<div class="select_box">
+								<select class="button_select select-fight-speed" onchange="updateBossFight()">
+									<option selected value="0">Instant Fight</option>
+									<option value="1">Normal Speed</option>
+									<option value="5">3x Speed</option>
+									<option value="10">8x Speed</option>
+									<option value="100">15x Speed</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="tab_item_wrap item-border tab_mordek">
+				<div class="fight-health-bars">
+					<div class="fight-health-bar">
+						<div class="fight-health-status">
+							<div class="health-title">Player HP</div>
+							<progress id="player-hp" max="1" value="1" class="health-bar"></progress>
+						</div>
+						<div class="health-progression"><span class="player-current-hp">0</span> / <span class="player-max-hp">0</span></div>
+					</div>
+					<div class="fight-health-bar">
+						<div class="fight-health-status">
+							<div class="health-title"><span class="selected-boss">Mordek</span> HP</div>
+							<progress id="mordek-hp" max="1" value="1" class="health-bar"></progress>
+						</div>
+						<div class="health-progression"><span class="mordek-current-hp">0</span> / <span class="mordek-max-hp">0</span></div>
+					</div>
+				</div>
+			</div>
+			<div class="tab_item_wrap item-border tab_drop">
+				<div class="main-title">Drop Rates</div>
+			</div>
+			<div class="tab_item_wrap item-border tab_drop">
+				<div class="data-category-group">
+					<div class="data-category-column column-drops">
+						<div class="data-title title-alone title-online-drop item-border">
+							<div class="bold-title">Online Drop Rates</div>
+						</div>
+						<div class="data-category data-category-title item-border">
+							<div class="data-items data-items-flex">
+								<div class="data-item item-online-drop-gold item-border">
+									<div>Gold Drop Rate</div>
+									<div class="data-item-name">
+										<div class="data-item-datas">
+											<div class="data-item-data-line">
+												<div class="data-item-data-line-title item-border">Current</div>
+												<div class="data-item-data-line-values">
+													<div class="data-item-data-line-value"><span class="gold-online-drop-current-s">0</span> / s</div>
+													<div class="data-item-data-line-value"><span class="gold-online-drop-current-h">0</span> / h</div>
+												</div>
+											</div>
+											<div class="data-item-data-line">
+												<div class="data-item-data-line-title item-border">Natural</div>
+												<div class="data-item-data-line-values">
+													<div class="data-item-data-line-value"><span class="gold-online-drop-natural-s">0</span> / s</div>
+													<div class="data-item-data-line-value"><span class="gold-online-drop-natural-h">0</span> / h</div>
+												</div>
+											</div>
+											<div class="data-item-data-line">
+												<div class="data-item-data-line-title item-border">With Snake</div>
+												<div class="data-item-data-line-values">
+													<div class="data-item-data-line-value"><span class="gold-online-drop-pet-s">0</span> / s</div>
+													<div class="data-item-data-line-value"><span class="gold-online-drop-pet-h">0</span> / h</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="data-item item-online-drop-wood item-border">
+									<div class="data-items-tab">
+										<div class="data-item-data-line item-border item-centered item-title">
+											<div class="data-items-tab-cat-title">Wood<br>Drop Rate</div>
+										</div>
+										<div class="data-item-data-line">
+											<div class="data-item-data-line-title item-border">Current</div>
+											<div class="data-item-data-line-values">
+												<div class="data-item-data-line-value"><span class="wood-online-drop-current-s">0</span> / s</div>
+												<div class="data-item-data-line-value"><span class="wood-online-drop-current-h">0</span> / h</div>
+											</div>
+										</div>
+										<div class="data-item-data-line">
+											<div class="data-item-data-line-title item-border">Natural</div>
+											<div class="data-item-data-line-values">
+												<div class="data-item-data-line-value"><span class="wood-online-drop-natural-s">0</span> / s</div>
+												<div class="data-item-data-line-value"><span class="wood-online-drop-natural-h">0</span> / h</div>
+											</div>
+										</div>
+										<div class="data-item-data-line">
+											<div class="data-item-data-line-title item-border">With Bird</div>
+											<div class="data-item-data-line-values">
+												<div class="data-item-data-line-value"><span class="wood-online-drop-pet-s">0</span> / s</div>
+												<div class="data-item-data-line-value"><span class="wood-online-drop-pet-h">0</span> / h</div>
+											</div>
+										</div>
+										<div class="data-item-data-line">
+											<div class="data-item-data-line-title item-border">With Mordek</div>
+											<div class="data-item-data-line-values">
+												<div class="data-item-data-line-value"><span class="wood-online-drop-mordek-s">0</span> / s</div>
+												<div class="data-item-data-line-value"><span class="wood-online-drop-mordek-h">0</span> / h</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="data-item item-online-drop-stone item-border">
+									<div class="data-items-tab">
+										<div class="data-item-data-line item-border item-centered item-title">
+											<div class="data-items-tab-cat-title">Stone<br>Drop Rate</div>
+										</div>
+										<div class="data-item-data-line">
+											<div class="data-item-data-line-title item-border">Current</div>
+											<div class="data-item-data-line-values">
+												<div class="data-item-data-line-value"><span class="stone-online-drop-current-s">0</span> / s</div>
+												<div class="data-item-data-line-value"><span class="stone-online-drop-current-h">0</span> / h</div>
+											</div>
+										</div>
+										<div class="data-item-data-line">
+											<div class="data-item-data-line-title item-border">Natural</div>
+											<div class="data-item-data-line-values">
+												<div class="data-item-data-line-value"><span class="stone-online-drop-natural-s">0</span> / s</div>
+												<div class="data-item-data-line-value"><span class="stone-online-drop-natural-h">0</span> / h</div>
+											</div>
+										</div>
+										<div class="data-item-data-line">
+											<div class="data-item-data-line-title item-border">With Dog</div>
+											<div class="data-item-data-line-values">
+												<div class="data-item-data-line-value"><span class="stone-online-drop-pet-s">0</span> / s</div>
+												<div class="data-item-data-line-value"><span class="stone-online-drop-pet-h">0</span> / h</div>
+											</div>
+										</div>
+										<div class="data-item-data-line">
+											<div class="data-item-data-line-title item-border">With Mordek</div>
+											<div class="data-item-data-line-values">
+												<div class="data-item-data-line-value"><span class="stone-online-drop-mordek-s">0</span> / s</div>
+												<div class="data-item-data-line-value"><span class="stone-online-drop-mordek-h">0</span> / h</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="data-item item-online-drop-metal item-border">
+									<div class="data-items-tab">
+										<div class="data-item-data-line item-border item-centered item-title">
+											<div class="data-items-tab-cat-title">Metal<br>Drop Rate</div>
+										</div>
+										<div class="data-item-data-line">
+											<div class="data-item-data-line-title item-border">Current</div>
+											<div class="data-item-data-line-values">
+												<div class="data-item-data-line-value"><span class="metal-online-drop-current-s">0</span> / s</div>
+												<div class="data-item-data-line-value"><span class="metal-online-drop-current-h">0</span> / h</div>
+											</div>
+										</div>
+										<div class="data-item-data-line">
+											<div class="data-item-data-line-title item-border">Natural</div>
+											<div class="data-item-data-line-values">
+												<div class="data-item-data-line-value"><span class="metal-online-drop-natural-s">0</span> / s</div>
+												<div class="data-item-data-line-value"><span class="metal-online-drop-natural-h">0</span> / h</div>
+											</div>
+										</div>
+										<div class="data-item-data-line">
+											<div class="data-item-data-line-title item-border">With Fox</div>
+											<div class="data-item-data-line-values">
+												<div class="data-item-data-line-value"><span class="metal-online-drop-pet-s">0</span> / s</div>
+												<div class="data-item-data-line-value"><span class="metal-online-drop-pet-h">0</span> / h</div>
+											</div>
+										</div>
+										<div class="data-item-data-line">
+											<div class="data-item-data-line-title item-border">With Mordek</div>
+											<div class="data-item-data-line-values">
+												<div class="data-item-data-line-value"><span class="metal-online-drop-mordek-s">0</span> / s</div>
+												<div class="data-item-data-line-value"><span class="metal-online-drop-mordek-h">0</span> / h</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="data-item item-online-drop-gems item-border">
+									<div class="data-items-tab">
+										<div class="data-item-data-line item-border item-centered item-title">
+											<div class="data-items-tab-cat-title">Gem<br>Drop Rate</div>
+										</div>
+										<div class="data-item-data-line">
+											<div class="data-item-data-line-title item-border">Current</div>
+											<div class="data-item-data-line-values">
+												<div class="data-item-data-line-value"><span class="gem-online-drop-current-s">0</span> / s</div>
+												<div class="data-item-data-line-value"><span class="gem-online-drop-current-h">0</span> / h</div>
+											</div>
+										</div>
+										<div class="data-item-data-line">
+											<div class="data-item-data-line-title item-border">Natural</div>
+											<div class="data-item-data-line-values">
+												<div class="data-item-data-line-value"><span class="gem-online-drop-natural-s">0</span> / s</div>
+												<div class="data-item-data-line-value"><span class="gem-online-drop-natural-h">0</span> / h</div>
+											</div>
+										</div>
+										<div class="data-item-data-line">
+											<div class="data-item-data-line-title item-border">With Penguin</div>
+											<div class="data-item-data-line-values">
+												<div class="data-item-data-line-value"><span class="gem-online-drop-pet-s">0</span> / s</div>
+												<div class="data-item-data-line-value"><span class="gem-online-drop-pet-h">0</span> / h</div>
+											</div>
+										</div>
+										<div class="data-item-data-line">
+											<div class="data-item-data-line-title item-border">With Mordek</div>
+											<div class="data-item-data-line-values">
+												<div class="data-item-data-line-value"><span class="gem-online-drop-mordek-s">0</span> / s</div>
+												<div class="data-item-data-line-value"><span class="gem-online-drop-mordek-h">0</span> / h</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="data-category-column column-godsspeed">
+						<div class="data-title title-alone title-online-drop item-border">
+							<div class="bold-title">Gods Speed Drops</div>
+						</div>
+						<div class="data-item item-online-drop-godsspeed item-border with-background">
+							<div class="data-item-name">
+								<div class="data-item-datas">
+									<div class="data-item-data-line">
+										<div class="data-item-data-line-title item-border">Gold</div>
+										<div class="data-item-data-line-values">
+											<div class="data-item-data-line-value"><span class="gold-godsspeed-drop">0</span></div>
+										</div>
+									</div>
+									<div class="data-item-data-line">
+										<div class="data-item-data-line-title item-border">Wood</div>
+										<div class="data-item-data-line-values">
+											<div class="data-item-data-line-value"><span class="wood-godsspeed-drop">0</span></div>
+										</div>
+									</div>
+									<div class="data-item-data-line">
+										<div class="data-item-data-line-title item-border">Stone</div>
+										<div class="data-item-data-line-values">
+											<div class="data-item-data-line-value"><span class="stone-godsspeed-drop">0</span></div>
+										</div>
+									</div>
+									<div class="data-item-data-line">
+										<div class="data-item-data-line-title item-border">Metal</div>
+										<div class="data-item-data-line-values">
+											<div class="data-item-data-line-value"><span class="metal-godsspeed-drop">0</span></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--<div class="data-category-column">
+						<div class="data-items data-items-flex no-gap">
+						<div class="data-title title-alone title-online-drop item-border">
+							<div class="bold-title">Gems Fighter : Penguin vs Mordek</div>
+						</div>
+							<div class="data-item item-online-drop-godsspeed item-border with-background width-total">
+								<div class="data-item-name">
+									<div class="data-item-datas">
+										<div class="data-item-data-line">
+											<div class="data-item-data-line-title item-border">Penguin gems drop rate</div>
+											<div class="data-item-data-line-values">
+												<div class="data-item-data-line-value"><span class="penguin-gems-droprate">0</span> / s</div>
+											</div>
+										</div>
+										<div class="data-item-data-line">
+											<div class="data-item-data-line-title item-border">Mordek gems drop rate</div>
+											<div class="data-item-data-line-values">
+												<div class="data-item-data-line-value"><span class="mordek-gems-droprate">0</span> / s</div>
+											</div>
+										</div>
+										<div class="data-item-data-line">
+											<div class="data-item-data-line-title item-border">Time to recoup the gem investment</div>
+											<div class="data-item-data-line-values">
+												<div class="data-item-data-line-value"><span class="time-penguin-mordek">0</span><br><span id="penguin-mordek-note">if you use mordek more than that, it's profitable, else it's better to use penguin.</span></div>
+											</div>
+										</div>
+										<div class="data-item-data-line wrap-text evolve-pet">Note : it cost 111 111 000 more gems to unlock mordek pet (unlockable after Mordek 7) than to unlock penguin (unlockable after Mordek 1)
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>-->
+				</div>
+			</div>
+			<div class="tab_item_wrap item-border tab_rebuild">
+				<div class="main-data">
+					<div class="main-title">Rebuild Simulator</div>
+					<div class="ascension-info">
+						<div class="mordek-fight-level">
+							<div>Gold rebuilded buildings</div>
+							<div class="input-with-control">
+								<button class="value-control" onclick="valueUpdate('building-gold-rank',false)">−</button>
+								<div><input id="building-gold-rank" class="input-building controlled-input" type="number"></div>
+								<button class="value-control" onclick="valueUpdate('building-gold-rank',true)">+</button>
+							</div>
+							<label for="building-gold-progress"><span class="building-gold-current-name">Current building progression</span></label>
+							<input id="building-gold-progress" class="input-real-extended controlled-input auto-width" type="text">
+						</div>
+						<div class="mordek-fight-level">
+							<div>Wood rebuilded buildings</div>
+							<div class="input-with-control">
+								<button class="value-control" onclick="valueUpdate('building-wood-rank',false)">−</button>
+								<div><input id="building-wood-rank" class="input-building controlled-input" type="number"></div>
+								<button class="value-control" onclick="valueUpdate('building-wood-rank',true)">+</button>
+							</div>
+							<label for="building-wood-progress"><span class="building-wood-current-name">Current building progression</span></label>
+							<input id="building-wood-progress" class="input-real-extended controlled-input auto-width" type="text">
+						</div>
+						<div class="mordek-fight-level">
+							<div>Stone rebuilded buildings</div>
+							<div class="input-with-control">
+								<button class="value-control" onclick="valueUpdate('building-stone-rank',false)">−</button>
+								<div><input id="building-stone-rank" class="input-building controlled-input" type="number"></div>
+								<button class="value-control" onclick="valueUpdate('building-stone-rank',true)">+</button>
+							</div>
+							<label for="building-stone-progress"><span class="building-stone-current-name">Current building progression</span></label>
+							<input id="building-stone-progress" class="input-real-extended controlled-input auto-width" type="text">
+						</div>
+						<div class="mordek-fight-level">
+							<div>Metal rebuilded buildings</div>
+							<div class="input-with-control">
+								<button class="value-control" onclick="valueUpdate('building-metal-rank',false)">−</button>
+								<div><input id="building-metal-rank" class="input-building controlled-input" type="number"></div>
+								<button class="value-control" onclick="valueUpdate('building-metal-rank',true)">+</button>
+							</div>
+							<label for="building-metal-progress"><span class="building-metal-current-name">Current building progression</span></label>
+							<input id="building-metal-progress" class="input-real-extended controlled-input auto-width" type="text">
+						</div>
+						<div class="mordek-fight-level">
+							<div>Gems rebuilded buildings</div>
+							<div class="input-with-control">
+								<button class="value-control" onclick="valueUpdate('building-gem-rank',false)">−</button>
+								<div><input id="building-gem-rank" class="input-building controlled-input" type="number"></div>
+								<button class="value-control" onclick="valueUpdate('building-gem-rank',true)">+</button>
+							</div>
+							<label for="building-gem-progress"><span class="building-gem-current-name">Current building progression</span></label>
+							<input id="building-gem-progress" class="input-real-extended controlled-input auto-width" type="text">
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="tab_item_wrap item-border tab_rebuild">
+				<div class="data-title title-alone title-online-drop item-border">
+					<div class="bold-title">Gold buildings</div>
+				</div>
+				<div class="data-category data-category-title item-border">
+					<div class="data-items data-items-flex align-start">
+						<div class="data-item building-gold-natural">
+							<div class="data-item-data-line">
+								<div class="data-item-data-line-title item-border item-no-border-bottom">With no pet</div>
+								<div class="data-item-data-line-offline item-border">
+									<div>Unlock <span class="building-gold-t1-name">Tier 1</span> : <span class="building-gold-pet-t1-natural">Done</span></div>
+									<div>Unlock <span class="building-gold-t2-name">Tier 2</span> : <span class="building-gold-pet-t2-natural">Done</span></div>
+									<div>Unlock <span class="building-gold-t3-name">Tier 3</span> : <span class="building-gold-pet-t3-natural">Done</span></div>
+									<div>Unlock <span class="building-gold-t4-name">Tier 4</span> : <span class="building-gold-pet-t4-natural">Done</span></div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item building-gold-current">
+							<div class="data-item-data-line">
+								<div class="data-item-data-line-title item-border item-no-border-bottom">With current pet</div>
+								<div class="data-item-data-line-offline item-border">
+									<div>Unlock <span class="building-gold-t1-name">Tier 1</span> : <span class="building-gold-pet-t1-current">Done</span></div>
+									<div>Unlock <span class="building-gold-t2-name">Tier 2</span> : <span class="building-gold-pet-t2-current">Done</span></div>
+									<div>Unlock <span class="building-gold-t3-name">Tier 3</span> : <span class="building-gold-pet-t3-current">Done</span></div>
+									<div>Unlock <span class="building-gold-t4-name">Tier 4</span> : <span class="building-gold-pet-t4-current">Done</span></div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item building-gold-snake">
+							<div class="data-item-data-line">
+								<div class="data-item-data-line-title item-border item-no-border-bottom">With Snake</div>
+								<div class="data-item-data-line-offline item-border">
+									<div>Unlock <span class="building-gold-t1-name">Tier 1</span> : <span class="building-gold-pet-t1-snake">Done</span></div>
+									<div>Unlock <span class="building-gold-t2-name">Tier 2</span> : <span class="building-gold-pet-t2-snake">Done</span></div>
+									<div>Unlock <span class="building-gold-t3-name">Tier 3</span> : <span class="building-gold-pet-t3-snake">Done</span></div>
+									<div>Unlock <span class="building-gold-t4-name">Tier 4</span> : <span class="building-gold-pet-t4-snake">Done</span></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+					<div class="data-title title-alone title-online-drop item-border">
+						<div class="bold-title">Wood buildings</div>
+					</div>
+					<div class="data-category data-category-title item-border">
+					<div class="data-items data-items-flex align-start">
+						<div class="data-item building-wood-natural">
+							<div class="data-item-data-line">
+								<div class="data-item-data-line-title item-border item-no-border-bottom">With no pet</div>
+								<div class="data-item-data-line-offline item-border">
+									<div>Unlock <span class="building-wood-t1-name">Tier 1</span> : <span class="building-wood-pet-t1-natural">Done</span></div>
+									<div>Unlock <span class="building-wood-t2-name">Tier 2</span> : <span class="building-wood-pet-t2-natural">Done</span></div>
+									<div>Unlock <span class="building-wood-t3-name">Tier 3</span> : <span class="building-wood-pet-t3-natural">Done</span></div>
+									<div>Unlock <span class="building-wood-t4-name">Tier 4</span> : <span class="building-wood-pet-t4-natural">Done</span></div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item building-wood-current">
+							<div class="data-item-data-line">
+								<div class="data-item-data-line-title item-border item-no-border-bottom">With current pet</div>
+								<div class="data-item-data-line-offline item-border">
+									<div>Unlock <span class="building-wood-t1-name">Tier 1</span> : <span class="building-wood-pet-t1-current">Done</span></div>
+									<div>Unlock <span class="building-wood-t2-name">Tier 2</span> : <span class="building-wood-pet-t2-current">Done</span></div>
+									<div>Unlock <span class="building-wood-t3-name">Tier 3</span> : <span class="building-wood-pet-t3-current">Done</span></div>
+									<div>Unlock <span class="building-wood-t4-name">Tier 4</span> : <span class="building-wood-pet-t4-current">Done</span></div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item building-wood-bird">
+							<div class="data-item-data-line">
+								<div class="data-item-data-line-title item-border item-no-border-bottom">With bird</div>
+								<div class="data-item-data-line-offline item-border">
+									<div>Unlock <span class="building-wood-t1-name">Tier 1</span> : <span class="building-wood-pet-t1-bird">Done</span></div>
+									<div>Unlock <span class="building-wood-t2-name">Tier 2</span> : <span class="building-wood-pet-t2-bird">Done</span></div>
+									<div>Unlock <span class="building-wood-t3-name">Tier 3</span> : <span class="building-wood-pet-t3-bird">Done</span></div>
+									<div>Unlock <span class="building-wood-t4-name">Tier 4</span> : <span class="building-wood-pet-t4-bird">Done</span></div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item building-wood-mordek">
+							<div class="data-item-data-line">
+								<div class="data-item-data-line-title item-border item-no-border-bottom">With Mordek</div>
+								<div class="data-item-data-line-offline item-border">
+									<div>Unlock <span class="building-wood-t1-name">Tier 1</span> : <span class="building-wood-pet-t1-mordek">Done</span></div>
+									<div>Unlock <span class="building-wood-t2-name">Tier 2</span> : <span class="building-wood-pet-t2-mordek">Done</span></div>
+									<div>Unlock <span class="building-wood-t3-name">Tier 3</span> : <span class="building-wood-pet-t3-mordek">Done</span></div>
+									<div>Unlock <span class="building-wood-t4-name">Tier 4</span> : <span class="building-wood-pet-t4-mordek">Done</span></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="data-title title-alone title-online-drop item-border">
+					<div class="bold-title">Stone buildings</div>
+				</div>
+				<div class="data-category data-category-title item-border">
+					<div class="data-items data-items-flex align-start">
+						<div class="data-item building-stone-natural">
+							<div class="data-item-data-line">
+								<div class="data-item-data-line-title item-border item-no-border-bottom">With no pet</div>
+								<div class="data-item-data-line-offline item-border">
+									<div>Unlock <span class="building-stone-t1-name">Tier 1</span> : <span class="building-stone-pet-t1-natural">Done</span></div>
+									<div>Unlock <span class="building-stone-t2-name">Tier 2</span> : <span class="building-stone-pet-t2-natural">Done</span></div>
+									<div>Unlock <span class="building-stone-t3-name">Tier 3</span> : <span class="building-stone-pet-t3-natural">Done</span></div>
+									<div>Unlock <span class="building-stone-t4-name">Tier 4</span> : <span class="building-stone-pet-t4-natural">Done</span></div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item building-stone-current">
+							<div class="data-item-data-line">
+								<div class="data-item-data-line-title item-border item-no-border-bottom">With current pet</div>
+								<div class="data-item-data-line-offline item-border">
+									<div>Unlock <span class="building-stone-t1-name">Tier 1</span> : <span class="building-stone-pet-t1-current">Done</span></div>
+									<div>Unlock <span class="building-stone-t2-name">Tier 2</span> : <span class="building-stone-pet-t2-current">Done</span></div>
+									<div>Unlock <span class="building-stone-t3-name">Tier 3</span> : <span class="building-stone-pet-t3-current">Done</span></div>
+									<div>Unlock <span class="building-stone-t4-name">Tier 4</span> : <span class="building-stone-pet-t4-current">Done</span></div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item building-stone-dog">
+							<div class="data-item-data-line">
+								<div class="data-item-data-line-title item-border item-no-border-bottom">With dog</div>
+								<div class="data-item-data-line-offline item-border">
+									<div>Unlock <span class="building-stone-t1-name">Tier 1</span> : <span class="building-stone-pet-t1-dog">Done</span></div>
+									<div>Unlock <span class="building-stone-t2-name">Tier 2</span> : <span class="building-stone-pet-t2-dog">Done</span></div>
+									<div>Unlock <span class="building-stone-t3-name">Tier 3</span> : <span class="building-stone-pet-t3-dog">Done</span></div>
+									<div>Unlock <span class="building-stone-t4-name">Tier 4</span> : <span class="building-stone-pet-t4-dog">Done</span></div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item building-stone-mordek">
+							<div class="data-item-data-line">
+								<div class="data-item-data-line-title item-border item-no-border-bottom">With Mordek</div>
+								<div class="data-item-data-line-offline item-border">
+									<div>Unlock <span class="building-stone-t1-name">Tier 1</span> : <span class="building-stone-pet-t1-mordek">Done</span></div>
+									<div>Unlock <span class="building-stone-t2-name">Tier 2</span> : <span class="building-stone-pet-t2-mordek">Done</span></div>
+									<div>Unlock <span class="building-stone-t3-name">Tier 3</span> : <span class="building-stone-pet-t3-mordek">Done</span></div>
+									<div>Unlock <span class="building-stone-t4-name">Tier 4</span> : <span class="building-stone-pet-t4-mordek">Done</span></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="data-title title-alone title-online-drop item-border">
+					<div class="bold-title">Metal buildings</div>
+				</div>
+				<div class="data-category data-category-title item-border">
+					<div class="data-items data-items-flex align-start">
+						<div class="data-item building-metal-natural">
+							<div class="data-item-data-line">
+								<div class="data-item-data-line-title item-border item-no-border-bottom">With no pet</div>
+								<div class="data-item-data-line-offline item-border">
+									<div>Unlock <span class="building-metal-t1-name">Tier 1</span> : <span class="building-metal-pet-t1-natural">Done</span></div>
+									<div>Unlock <span class="building-metal-t2-name">Tier 2</span> : <span class="building-metal-pet-t2-natural">Done</span></div>
+									<div>Unlock <span class="building-metal-t3-name">Tier 3</span> : <span class="building-metal-pet-t3-natural">Done</span></div>
+									<div>Unlock <span class="building-metal-t4-name">Tier 4</span> : <span class="building-metal-pet-t4-natural">Done</span></div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item building-metal-current">
+							<div class="data-item-data-line">
+								<div class="data-item-data-line-title item-border item-no-border-bottom">With current pet</div>
+								<div class="data-item-data-line-offline item-border">
+									<div>Unlock <span class="building-metal-t1-name">Tier 1</span> : <span class="building-metal-pet-t1-current">Done</span></div>
+									<div>Unlock <span class="building-metal-t2-name">Tier 2</span> : <span class="building-metal-pet-t2-current">Done</span></div>
+									<div>Unlock <span class="building-metal-t3-name">Tier 3</span> : <span class="building-metal-pet-t3-current">Done</span></div>
+									<div>Unlock <span class="building-metal-t4-name">Tier 4</span> : <span class="building-metal-pet-t4-current">Done</span></div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item building-metal-fox">
+							<div class="data-item-data-line">
+								<div class="data-item-data-line-title item-border item-no-border-bottom">With fox</div>
+								<div class="data-item-data-line-offline item-border">
+									<div>Unlock <span class="building-metal-t1-name">Tier 1</span> : <span class="building-metal-pet-t1-fox">Done</span></div>
+									<div>Unlock <span class="building-metal-t2-name">Tier 2</span> : <span class="building-metal-pet-t2-fox">Done</span></div>
+									<div>Unlock <span class="building-metal-t3-name">Tier 3</span> : <span class="building-metal-pet-t3-fox">Done</span></div>
+									<div>Unlock <span class="building-metal-t4-name">Tier 4</span> : <span class="building-metal-pet-t4-fox">Done</span></div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item building-metal-mordek">
+							<div class="data-item-data-line">
+								<div class="data-item-data-line-title item-border item-no-border-bottom">With Mordek</div>
+								<div class="data-item-data-line-offline item-border">
+									<div>Unlock <span class="building-metal-t1-name">Tier 1</span> : <span class="building-metal-pet-t1-mordek">Done</span></div>
+									<div>Unlock <span class="building-metal-t2-name">Tier 2</span> : <span class="building-metal-pet-t2-mordek">Done</span></div>
+									<div>Unlock <span class="building-metal-t3-name">Tier 3</span> : <span class="building-metal-pet-t3-mordek">Done</span></div>
+									<div>Unlock <span class="building-metal-t4-name">Tier 4</span> : <span class="building-metal-pet-t4-mordek">Done</span></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="data-title title-alone title-online-drop item-border">
+					<div class="bold-title">Gems buildings</div>
+				</div>
+				<div class="data-category data-category-title item-border">
+					<div class="data-items data-items-flex align-start">
+						<div class="data-item building-gem-natural">
+							<div class="data-item-data-line">
+								<div class="data-item-data-line-title item-border item-no-border-bottom">With no pet</div>
+								<div class="data-item-data-line-offline item-border">
+									<div>Unlock <span class="building-gem-t1-name">Tier 1</span> : <span class="building-gem-pet-t1-natural">Done</span></div>
+									<div>Unlock <span class="building-gem-t2-name">Tier 2</span> : <span class="building-gem-pet-t2-natural">Done</span></div>
+									<div>Unlock <span class="building-gem-t3-name">Tier 3</span> : <span class="building-gem-pet-t3-natural">Done</span></div>
+									<div>Unlock <span class="building-gem-t4-name">Tier 4</span> : <span class="building-gem-pet-t4-natural">Done</span></div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item building-gem-current">
+							<div class="data-item-data-line">
+								<div class="data-item-data-line-title item-border item-no-border-bottom">With current pet</div>
+								<div class="data-item-data-line-offline item-border">
+									<div>Unlock <span class="building-gem-t1-name">Tier 1</span> : <span class="building-gem-pet-t1-current">Done</span></div>
+									<div>Unlock <span class="building-gem-t2-name">Tier 2</span> : <span class="building-gem-pet-t2-current">Done</span></div>
+									<div>Unlock <span class="building-gem-t3-name">Tier 3</span> : <span class="building-gem-pet-t3-current">Done</span></div>
+									<div>Unlock <span class="building-gem-t4-name">Tier 4</span> : <span class="building-gem-pet-t4-current">Done</span></div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item building-gem-penguin">
+							<div class="data-item-data-line">
+								<div class="data-item-data-line-title item-border item-no-border-bottom">With penguin</div>
+								<div class="data-item-data-line-offline item-border">
+									<div>Unlock <span class="building-gem-t1-name">Tier 1</span> : <span class="building-gem-pet-t1-pinguin">Done</span></div>
+									<div>Unlock <span class="building-gem-t2-name">Tier 2</span> : <span class="building-gem-pet-t2-pinguin">Done</span></div>
+									<div>Unlock <span class="building-gem-t3-name">Tier 3</span> : <span class="building-gem-pet-t3-pinguin">Done</span></div>
+									<div>Unlock <span class="building-gem-t4-name">Tier 4</span> : <span class="building-gem-pet-t4-pinguin">Done</span></div>
+								</div>
+							</div>
+						</div>
+						<div class="data-item building-gem-mordek">
+							<div class="data-item-data-line">
+								<div class="data-item-data-line-title item-border item-no-border-bottom">With Mordek</div>
+								<div class="data-item-data-line-offline item-border">
+									<div>Unlock <span class="building-gem-t1-name">Tier 1</span> : <span class="building-gem-pet-t1-mordek">Done</span></div>
+									<div>Unlock <span class="building-gem-t2-name">Tier 2</span> : <span class="building-gem-pet-t2-mordek">Done</span></div>
+									<div>Unlock <span class="building-gem-t3-name">Tier 3</span> : <span class="building-gem-pet-t3-mordek">Done</span></div>
+									<div>Unlock <span class="building-gem-t4-name">Tier 4</span> : <span class="building-gem-pet-t4-mordek">Done</span></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="tab_item_wrap item-border tab_settings">
+				<div class="main-data">
+					<div class="main-title">Settings</div>
+					<div class="ascension-info">
+						<div class="mordek-fight-sim">
+							<div class="wrap-text">Display Format</div>
+							<div id="chosenFormat">
+								<input type="radio" class="numberFormat" name="numberFormat" id="formatFull" value ="1">
+								<label>Full Number (<span id="format-exemple-full"></span>)</label>
+								<input type="radio" class="numberFormat" name="numberFormat" id="formatAbbr" value ="2">
+								<label>Abbreviated (<span id="format-exemple-abbr"></span>)</label>
+								<input type="radio" class="numberFormat" name="numberFormat" id="formatExpo" value ="3">
+								<label>Exponential (<span id="format-exemple-expo"></span>)</label>
+							</div>
+						</div>
+						<div class="mordek-fight-sim">
+							<button id="reset-data-game" class="button" onclick="doRemoveData()">Remove data from URL</button>
+							<div class="wrap-text">So next page refresh don't reload previously loaded data</div>
+						</div>
+						<div class="mordek-fight-sim">
+							<button id="reset-data-button" class="button" onclick="doReset()">Reset all data</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="tab_item_wrap item-border tab_settings">
+				<div class="main-data no-wrap">
+					<div class="main-title one-line">Export Data</div>
+					<div class="ascension-info no-wrap full-flex">
+						<div id="exported-container" class="mordek-fight-switch full-flex">
+							<div>Exported Data</div>
+							<div id="exported-data" class="wrap-text item-border full-size hidden"></div>
+						</div>
+						<div class="mordek-fight-sim">
+							<button id="reset-data-button" class="button" onclick="doExport()">Export Data</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="tab_item_wrap item-border tab_settings">
+				<div class="main-data">
+					<div class="main-title">Import Data</div>
+					<div class="ascension-info full-flex">
+						<div id="exported-container" class="mordek-fight-switch full-flex">
+							<div>Data to import</div>
+							<textarea id="import-data" class="import-data full-size controlled-input" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
+						</div>
+						<div class="mordek-fight-sim">
+							<button id="reset-data-button" class="button" onclick="doImport()">Import Data</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+<script src="hm-common.js"></script>
+<script src="hm-data.js"></script>
+<script src="hm-drop.js"></script>
+<script src="hm-craft.js"></script>
+<script src="hm-mordek.js"></script>
+<script src="hm-rebuild.js"></script>
+<script src="hm-ascension.js"></script>
+<script src="hm-pets.js"></script>
+<script src="hm.js"></script>
+</html>
